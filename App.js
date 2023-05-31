@@ -1,15 +1,21 @@
-import { StatusBar } from 'expo-status-bar';
-import { useState } from 'react';
-import { StyleSheet, Text, TextInput, View } from 'react-native';
+import { StatusBar } from "expo-status-bar";
+import { StyleSheet, View, ImageBackground } from "react-native";
+import RegistrationScreen from "./Screens/RegistrationScreen/RegistrationScreen.jsx";
+import LoginScreen from "./Screens/LoginScreen/LoginScreen.jsx";
+import imageBg from "./image/PhotoBG.jpg";
 
 export default function App() {
-  const [query, setQuery]=useState()
-  
   return (
     <View style={styles.container}>
-      <Text>{query}</Text>
-      <StatusBar style="auto" />
-      <TextInput style={styles.inputWraper} onChange={(e)=>setQuery(e.target.value)} type='text' value=''/>
+      <ImageBackground
+        source={imageBg}
+        resizeMode="stretch"
+        style={styles.image}
+      >
+        {/* <LoginScreen /> */}
+        <RegistrationScreen />
+        <StatusBar style="auto" />
+      </ImageBackground>
     </View>
   );
 }
@@ -17,12 +23,14 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
-  inputWraper: {
-
-    backgroundColor: 'green'
-  }
+  image: {
+    flex: 1,
+    alignContent: "center",
+    justifyContent: "center",
+  },
+  text: {
+    fontSize: 25,
+    fontWeight: "500",
+  },
 });

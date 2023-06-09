@@ -1,28 +1,21 @@
-import { StyleSheet, View, TextInput, Text, Keyboard } from "react-native";
-import { TouchableOpacity } from "react-native";
-import React, { useState, useEffect } from "react";
-
-const RegisterButton = () => {
-  return (
-    <TouchableOpacity style={styles.button} onPress={() => {}}>
-      <Text style={styles.buttonText}>Увійти</Text>
-    </TouchableOpacity>
-  );
-};
+import { StyleSheet, View, TextInput, Text, Keyboard } from 'react-native';
+import { TouchableOpacity } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { AuthRegistrationButton } from '../../components';
 
 const LoginScreen = () => {
   const [isKeyboardVisible, setKeyboardVisible] = useState(false);
 
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
-      "keyboardDidShow",
+      'keyboardDidShow',
       () => {
         setKeyboardVisible(true);
       }
     );
 
     const keyboardDidHideListener = Keyboard.addListener(
-      "keyboardDidHide",
+      'keyboardDidHide',
       () => {
         setKeyboardVisible(false);
       }
@@ -63,10 +56,10 @@ const LoginScreen = () => {
 
       {!isKeyboardVisible && (
         <>
-          <RegisterButton />
-          <Text style={styles.text} onPress={() => {}}>
-            Вже є акаунт? Увійти
-          </Text>
+          <AuthRegistrationButton textButton="Увійти" />
+          <TouchableOpacity onPress={() => {}}>
+            <Text style={styles.text}>Вже є акаунт? Увійти</Text>
+          </TouchableOpacity>
         </>
       )}
     </View>
@@ -76,66 +69,66 @@ const LoginScreen = () => {
 const styles = StyleSheet.create({
   container: {
     // position: "relative",
-    display: "flex",
+    display: 'flex',
 
     minWidth: 343,
-    marginTop: "auto",
+    marginTop: 'auto',
     paddingLeft: 16,
     paddingRight: 16,
     borderTopRightRadius: 25,
     borderTopLeftRadius: 25,
 
-    backgroundColor: "#ffffff",
+    backgroundColor: '#ffffff',
   },
   loginText: {
-    textAlign: "center",
+    textAlign: 'center',
     fontWeight: 500,
     fontSize: 30,
     marginTop: 32,
     marginBottom: 33,
   },
   inputWraper: {
-    display: "flex",
+    display: 'flex',
     gap: 16,
   },
   inputWrapperOpenKeyBord: {
-    display: "flex",
+    display: 'flex',
     gap: 16,
     marginBottom: 32,
   },
   input: {
     padding: 16,
     borderRadius: 8,
-    backgroundColor: "#F6F6F6",
-    borderColor: "#E8E8E8",
+    backgroundColor: '#F6F6F6',
+    borderColor: '#E8E8E8',
     height: 50,
   },
 
   button: {
-    backgroundColor: "#FF6C00",
+    backgroundColor: '#FF6C00',
     padding: 16,
     borderRadius: 100,
     marginTop: 43,
     marginBottom: 16,
   },
   buttonText: {
-    color: "white",
-    marginLeft: "auto",
-    marginRight: "auto",
+    color: 'white',
+    marginLeft: 'auto',
+    marginRight: 'auto',
     fontSize: 16,
     fontWeight: 400,
   },
   text: {
-    textAlign: "center",
+    textAlign: 'center',
     marginBottom: 78,
-    color: "#1B4371",
+    color: '#1B4371',
   },
 
   wrapperPasword: {
-    position: "relative",
+    position: 'relative',
   },
   textPasword: {
-    position: "absolute",
+    position: 'absolute',
     right: 16,
     top: 16,
   },

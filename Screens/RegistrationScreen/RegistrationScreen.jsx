@@ -9,35 +9,28 @@ import {
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
   Platform,
-} from "react-native";
+  TouchableOpacity,
+} from 'react-native';
 
-import { TouchableOpacity } from "react-native";
-import avatarImg from "../../image/avatar.jpg";
-import { useEffect, useState } from "react";
+import avatarImg from '../../image/avatar.jpg';
+import { useEffect, useState } from 'react';
 
-import { AntDesign } from "@expo/vector-icons";
-
-const RegisterButton = () => {
-  return (
-    <TouchableOpacity style={styles.button} onPress={() => {}}>
-      <Text style={styles.buttonText}>Зареєструватися</Text>
-    </TouchableOpacity>
-  );
-};
+import { AntDesign } from '@expo/vector-icons';
+import { AuthRegistrationButton } from '../../components';
 
 const RegistrationScreen = () => {
   const [isKeyboardVisible, setKeyboardVisible] = useState(false);
 
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
-      "keyboardDidShow",
+      'keyboardDidShow',
       () => {
         setKeyboardVisible(true);
       }
     );
 
     const keyboardDidHideListener = Keyboard.addListener(
-      "keyboardDidHide",
+      'keyboardDidHide',
       () => {
         setKeyboardVisible(false);
       }
@@ -55,7 +48,7 @@ const RegistrationScreen = () => {
         {!isKeyboardVisible ? (
           <View
             style={{
-              backgroundColor: "#F6F6F6",
+              backgroundColor: '#F6F6F6',
               width: 120,
               height: 120,
               borderRadius: 16,
@@ -113,10 +106,10 @@ const RegistrationScreen = () => {
       </View>
       {!isKeyboardVisible && (
         <>
-          <RegisterButton />
-          <Text style={styles.text} onPress={() => {}}>
-            Вже є акаунт? Увійти
-          </Text>
+          <AuthRegistrationButton textButton="Зареєструватись" />
+          <TouchableOpacity onPress={() => {}}>
+            <Text style={styles.text}>Вже є акаунт? Увійти</Text>
+          </TouchableOpacity>
         </>
       )}
     </View>
@@ -125,86 +118,86 @@ const RegistrationScreen = () => {
 
 const styles = StyleSheet.create({
   container: {
-    display: "flex",
+    display: 'flex',
 
     minWidth: 343,
-    marginTop: "auto",
+    marginTop: 'auto',
     paddingLeft: 16,
     paddingRight: 16,
     borderTopRightRadius: 25,
     borderTopLeftRadius: 25,
 
-    backgroundColor: "#ffffff",
+    backgroundColor: '#ffffff',
   },
 
   profileImg: {
     borderRadius: 16,
-    backgroundColor: "red",
+    backgroundColor: 'red',
   },
   wrapperImg: {
-    position: "relative",
-    display: "flex",
-    alignItems: "center",
+    position: 'relative',
+    display: 'flex',
+    alignItems: 'center',
     marginTop: -60,
   },
   wrapperIcon: {
-    position: "relative",
+    position: 'relative',
   },
   addIcon: {
-    position: "absolute",
+    position: 'absolute',
     right: -73,
     bottom: 15,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: '#FFFFFF',
     borderRadius: 25,
   },
   registerText: {
-    textAlign: "center",
+    textAlign: 'center',
     fontWeight: 500,
     fontSize: 30,
     marginTop: 32,
     marginBottom: 33,
   },
   inputWraper: {
-    display: "flex",
+    display: 'flex',
     gap: 16,
   },
   inputWrapperOpenKeyBord: {
-    display: "flex",
+    display: 'flex',
     gap: 16,
     marginBottom: 32,
   },
   input: {
     padding: 16,
     borderRadius: 8,
-    backgroundColor: "#F6F6F6",
-    borderColor: "#E8E8E8",
+    backgroundColor: '#F6F6F6',
+    borderColor: '#E8E8E8',
     height: 50,
   },
 
   button: {
-    backgroundColor: "#FF6C00",
+    backgroundColor: '#FF6C00',
     padding: 16,
     borderRadius: 100,
     marginTop: 43,
     marginBottom: 16,
   },
   buttonText: {
-    color: "white",
-    marginLeft: "auto",
-    marginRight: "auto",
+    color: 'white',
+    marginLeft: 'auto',
+    marginRight: 'auto',
     fontSize: 16,
     fontWeight: 400,
   },
   text: {
-    textAlign: "center",
+    textAlign: 'center',
     marginBottom: 78,
-    color: "#1B4371",
+    color: '#1B4371',
   },
   wrapperPasword: {
-    position: "relative",
+    position: 'relative',
   },
   textPasword: {
-    position: "absolute",
+    position: 'absolute',
     right: 16,
     top: 16,
   },

@@ -1,10 +1,19 @@
-import { StyleSheet, View, TextInput, Text, Keyboard } from 'react-native';
+import {
+  StyleSheet,
+  View,
+  TextInput,
+  Text,
+  Keyboard,
+  KeyboardAvoidingView,
+} from 'react-native';
 import { TouchableOpacity } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { AuthRegistrationButton } from '../../components';
 
 const LoginScreen = () => {
   const [isKeyboardVisible, setKeyboardVisible] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
@@ -27,52 +36,69 @@ const LoginScreen = () => {
     };
   }, []);
 
+  const onLogin = () => {
+    console.log('email:', email, 'password:', password);
+  };
+
   return (
-    <View style={styles.container}>
+    <View
+      style={
+        isKeyboardVisible ? styles.containerKeyboardVisible : styles.container
+      }
+    >
       <Text style={styles.loginText}>Увійти</Text>
-      <View
-        style={
-          isKeyboardVisible
-            ? styles.inputWrapperOpenKeyBord
-            : styles.inputWraper
-        }
+      <KeyboardAvoidingView
+        behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
       >
-        <TextInput
-          style={styles.input}
-          multiline
-          inputMode="email"
-          keyboardType="email-address"
-          placeholder="Адреса електронної пошти"
-        />
-        <View style={styles.wrapperPasword}>
+        <View style={styles.inputWraper}>
+          <TextInput
+            style={styles.input}
+            multiline
+            inputMode="email"
+            keyboardType="email-address"
+            placeholder="Адреса електронної пошти"
+            value={email}
+            onChangeText={setEmail}
+          />
+
           <TextInput
             style={styles.input}
             secureTextEntry
             placeholder="Пароль"
+            value={password}
+            onChangeText={setPassword}
           />
           <Text style={styles.textPasword}>Показати</Text>
         </View>
-      </View>
-
-      {!isKeyboardVisible && (
-        <>
-          <AuthRegistrationButton textButton="Увійти" />
-          <TouchableOpacity onPress={() => {}}>
-            <Text style={styles.text}>Вже є акаунт? Увійти</Text>
-          </TouchableOpacity>
-        </>
-      )}
+      </KeyboardAvoidingView>
+      <AuthRegistrationButton textButton="Увійти" onClick={onLogin} />
+      <TouchableOpacity onPress={() => {}}>
+        <Text style={styles.text}>Вже є акаунт? Увійти</Text>
+      </TouchableOpacity>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    // position: "relative",
     display: 'flex',
 
     minWidth: 343,
     marginTop: 'auto',
+    paddingLeft: 16,
+    paddingRight: 16,
+    borderTopRightRadius: 25,
+    borderTopLeftRadius: 25,
+
+    backgroundColor: '#ffffff',
+  },
+  containerKeyboardVisible: {
+    position: 'relative',
+    display: 'flex',
+
+    minWidth: 343,
+    marginTop: 'auto',
+    marginBottom: 55,
     paddingLeft: 16,
     paddingRight: 16,
     borderTopRightRadius: 25,
@@ -90,11 +116,6 @@ const styles = StyleSheet.create({
   inputWraper: {
     display: 'flex',
     gap: 16,
-  },
-  inputWrapperOpenKeyBord: {
-    display: 'flex',
-    gap: 16,
-    marginBottom: 32,
   },
   input: {
     padding: 16,
@@ -124,13 +145,10 @@ const styles = StyleSheet.create({
     color: '#1B4371',
   },
 
-  wrapperPasword: {
-    position: 'relative',
-  },
   textPasword: {
     position: 'absolute',
     right: 16,
-    top: 16,
+    bottom: 32,
   },
 });
 export default LoginScreen;

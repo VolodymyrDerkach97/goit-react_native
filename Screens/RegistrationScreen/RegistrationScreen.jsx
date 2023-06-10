@@ -3,14 +3,11 @@ import {
   View,
   TextInput,
   Text,
-  Button,
   Image,
   Keyboard,
   KeyboardAvoidingView,
-  TouchableWithoutFeedback,
   Platform,
   TouchableOpacity,
-  Alert,
 } from 'react-native';
 
 import avatarImg from '../../image/avatar.jpg';
@@ -47,98 +44,94 @@ const RegistrationScreen = () => {
   }, []);
 
   const onRegistration = () => {
-    console.log('login:', login);
+    console.log('login:', login, 'email:', email, 'password:', password);
   };
 
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <View
-        style={
-          isKeyboardVisible ? styles.containerKeyboardVisible : styles.container
-        }
-      >
-        <View style={styles.wrapperImg}>
+    <View
+      style={
+        isKeyboardVisible ? styles.containerKeyboardVisible : styles.container
+      }
+    >
+      <View style={styles.wrapperImg}>
+        {!isKeyboardVisible ? (
+          <View
+            style={{
+              backgroundColor: '#F6F6F6',
+              width: 120,
+              height: 120,
+              borderRadius: 16,
+            }}
+          ></View>
+        ) : (
+          <Image source={avatarImg} style={styles.profileImg} />
+        )}
+        <View style={styles.wrapperIcon}>
           {!isKeyboardVisible ? (
-            <View
-              style={{
-                backgroundColor: '#F6F6F6',
-                width: 120,
-                height: 120,
-                borderRadius: 16,
-              }}
-            ></View>
+            <AntDesign
+              style={styles.addIcon}
+              name="pluscircleo"
+              size={24}
+              color="black"
+            />
           ) : (
-            <Image source={avatarImg} style={styles.profileImg} />
+            <AntDesign
+              style={styles.addIcon}
+              name="closecircleo"
+              size={24}
+              color="#E8E8E8"
+            />
           )}
-          <View style={styles.wrapperIcon}>
-            {!isKeyboardVisible ? (
-              <AntDesign
-                style={styles.addIcon}
-                name="pluscircleo"
-                size={24}
-                color="black"
-              />
-            ) : (
-              <AntDesign
-                style={styles.addIcon}
-                name="closecircleo"
-                size={24}
-                color="#E8E8E8"
-              />
-            )}
+        </View>
+      </View>
+      <Text style={styles.registerText}>Реєстрація</Text>
+      <KeyboardAvoidingView
+        behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
+      >
+        <View
+          style={
+            isKeyboardVisible
+              ? styles.inputWrapperOpenKeyBord
+              : styles.inputWraper
+          }
+        >
+          <TextInput
+            style={styles.input}
+            multiline
+            value={login}
+            inputMode="text"
+            placeholder="Логін"
+            onChangeText={setLogin}
+          />
+          <TextInput
+            style={styles.input}
+            multiline
+            value={email}
+            inputMode="email"
+            placeholder="Адреса електронної пошти"
+            onChangeText={setEmail}
+          />
+          <View style={styles.wrapperPasword}>
+            <TextInput
+              style={styles.input}
+              secureTextEntry
+              value={password}
+              placeholder="Пароль"
+              onChangeText={setPassword}
+            />
+            <Text style={styles.textPasword}>Показати</Text>
           </View>
         </View>
-        <Text style={styles.registerText}>Реєстрація</Text>
-        <KeyboardAvoidingView
-          behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
-        >
-          <View
-            style={
-              isKeyboardVisible
-                ? styles.inputWrapperOpenKeyBord
-                : styles.inputWraper
-            }
-          >
-            <TextInput
-              style={styles.input}
-              multiline
-              value={login}
-              inputMode="text"
-              placeholder="Логін"
-              onChange={setLogin}
-            />
-            <TextInput
-              style={styles.input}
-              multiline
-              value={email}
-              inputMode="email"
-              placeholder="Адреса електронної пошти"
-              onChangeText={setEmail}
-            />
-            <View style={styles.wrapperPasword}>
-              <TextInput
-                style={styles.input}
-                secureTextEntry
-                value={password}
-                placeholder="Пароль"
-                onChangeText={setPassword}
-              />
-              <Text style={styles.textPasword}>Показати</Text>
-            </View>
-          </View>
-        </KeyboardAvoidingView>
+      </KeyboardAvoidingView>
 
-        <>
-          <AuthRegistrationButton
-            textButton="Зареєструватись"
-            onClick={onRegistration}
-          />
-          <TouchableOpacity onPress={() => {}}>
-            <Text style={styles.text}>Вже є акаунт? Увійти</Text>
-          </TouchableOpacity>
-        </>
-      </View>
-    </TouchableWithoutFeedback>
+      <AuthRegistrationButton
+        textButton="Зареєструватись"
+        onClick={onRegistration}
+      />
+      <TouchableOpacity onPress={() => {}}>
+        <Text style={styles.text}>Вже є акаунт? Увійти</Text>
+      </TouchableOpacity>
+    </View>
   );
 };
 

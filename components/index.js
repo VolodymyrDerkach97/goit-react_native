@@ -1,1 +1,1 @@
-export * from './AuthRegistrationButton'
+export * from './ButtonApp';

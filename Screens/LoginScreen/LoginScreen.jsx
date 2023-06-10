@@ -4,16 +4,22 @@ import {
   TextInput,
   Text,
   Keyboard,
+  ImageBackground,
   KeyboardAvoidingView,
+  TouchableWithoutFeedback,
 } from 'react-native';
 import { TouchableOpacity } from 'react-native';
 import React, { useState, useEffect } from 'react';
-import { AuthRegistrationButton } from '../../components';
+import { ButtonApp } from '../../components';
+import { useNavigation } from '@react-navigation/native';
+import imageBg from '../../image/PhotoBG.jpg';
 
 const LoginScreen = () => {
   const [isKeyboardVisible, setKeyboardVisible] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  const navigation = useNavigation();
 
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
@@ -38,44 +44,63 @@ const LoginScreen = () => {
 
   const onLogin = () => {
     console.log('email:', email, 'password:', password);
+    navigation.navigate('Home');
   };
 
   return (
-    <View
-      style={
-        isKeyboardVisible ? styles.containerKeyboardVisible : styles.container
-      }
-    >
-      <Text style={styles.loginText}>Увійти</Text>
-      <KeyboardAvoidingView
-        behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
-      >
-        <View style={styles.inputWraper}>
-          <TextInput
-            style={styles.input}
-            multiline
-            inputMode="email"
-            keyboardType="email-address"
-            placeholder="Адреса електронної пошти"
-            value={email}
-            onChangeText={setEmail}
-          />
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <View style={{ flex: 1 }}>
+        <ImageBackground
+          source={imageBg}
+          resizeMode="stretch"
+          style={{ flex: 1, alignContent: 'center', justifyContent: 'center' }}
+        >
+          <View
+            style={
+              Platform.OS == 'ios'
+                ? isKeyboardVisible
+                  ? styles.containerKeyboardVisibleIos
+                  : styles.containerIos
+                : isKeyboardVisible
+                ? styles.containerKeyboardVisible
+                : styles.container
+            }
+          >
+            <Text style={styles.loginText}>Увійти</Text>
+            <KeyboardAvoidingView
+              behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
+            >
+              <View style={styles.inputWraper}>
+                <TextInput
+                  style={styles.input}
+                  multiline
+                  inputMode="email"
+                  keyboardType="email-address"
+                  placeholder="Адреса електронної пошти"
+                  value={email}
+                  onChangeText={setEmail}
+                />
 
-          <TextInput
-            style={styles.input}
-            secureTextEntry
-            placeholder="Пароль"
-            value={password}
-            onChangeText={setPassword}
-          />
-          <Text style={styles.textPasword}>Показати</Text>
-        </View>
-      </KeyboardAvoidingView>
-      <AuthRegistrationButton textButton="Увійти" onClick={onLogin} />
-      <TouchableOpacity onPress={() => {}}>
-        <Text style={styles.text}>Вже є акаунт? Увійти</Text>
-      </TouchableOpacity>
-    </View>
+                <TextInput
+                  style={styles.input}
+                  secureTextEntry
+                  placeholder="Пароль"
+                  value={password}
+                  onChangeText={setPassword}
+                />
+                <Text style={styles.textPasword}>Показати</Text>
+              </View>
+            </KeyboardAvoidingView>
+            <ButtonApp textButton="Увійти" onClick={onLogin} />
+            <TouchableOpacity
+              onPress={() => navigation.navigate('Registration')}
+            >
+              <Text style={styles.text}>Вже є акаунт? Увійти</Text>
+            </TouchableOpacity>
+          </View>
+        </ImageBackground>
+      </View>
+    </TouchableWithoutFeedback>
   );
 };
 
@@ -99,6 +124,32 @@ const styles = StyleSheet.create({
     minWidth: 343,
     marginTop: 'auto',
     marginBottom: 55,
+    paddingLeft: 16,
+    paddingRight: 16,
+    borderTopRightRadius: 25,
+    borderTopLeftRadius: 25,
+
+    backgroundColor: '#ffffff',
+  },
+  containerIos: {
+    display: 'flex',
+
+    minWidth: 343,
+    marginTop: 'auto',
+    paddingLeft: 16,
+    paddingRight: 16,
+    borderTopRightRadius: 25,
+    borderTopLeftRadius: 25,
+
+    backgroundColor: '#ffffff',
+  },
+  containerKeyboardVisibleIos: {
+    position: 'relative',
+    display: 'flex',
+
+    minWidth: 343,
+    marginTop: 'auto',
+    paddingBottom: 150,
     paddingLeft: 16,
     paddingRight: 16,
     borderTopRightRadius: 25,

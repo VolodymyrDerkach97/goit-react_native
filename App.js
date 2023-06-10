@@ -1,44 +1,44 @@
 import { StatusBar } from 'expo-status-bar';
-import {
-  StyleSheet,
-  View,
-  ImageBackground,
-  TouchableWithoutFeedback,
-  Keyboard,
-} from 'react-native';
+
+import 'react-native-gesture-handler';
+
 import RegistrationScreen from './Screens/RegistrationScreen/RegistrationScreen.jsx';
 import LoginScreen from './Screens/LoginScreen/LoginScreen.jsx';
-import imageBg from './image/PhotoBG.jpg';
+
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import Home from './Screens/Home/Home.jsx';
+import { Button, TouchableOpacity } from 'react-native';
+import { Feather } from '@expo/vector-icons';
+const MainStack = createStackNavigator();
 
 export default function App() {
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <View style={styles.container}>
-        <ImageBackground
-          source={imageBg}
-          resizeMode="stretch"
-          style={styles.image}
-        >
-          <LoginScreen />
-          {/* <RegistrationScreen /> */}
-          <StatusBar style="auto" />
-        </ImageBackground>
-      </View>
-    </TouchableWithoutFeedback>
+    <>
+      <NavigationContainer>
+        <MainStack.Navigator initialRouteName="Registration">
+          <MainStack.Screen
+            name="Registration"
+            component={RegistrationScreen}
+            options={{ headerShown: false }}
+          />
+
+          <MainStack.Screen
+            name="Login"
+            component={LoginScreen}
+            options={{ headerShown: false }}
+          />
+
+          <MainStack.Screen
+            name="Home"
+            component={Home}
+            options={{
+              headerShown: false,
+            }}
+          />
+        </MainStack.Navigator>
+      </NavigationContainer>
+      <StatusBar style="auto" />
+    </>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  image: {
-    flex: 1,
-    alignContent: 'center',
-    justifyContent: 'center',
-  },
-  text: {
-    fontSize: 25,
-    fontWeight: '500',
-  },
-});
